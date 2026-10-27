@@ -45,7 +45,7 @@ export async function runImageAnalysis(type: AnalysisType, dataUrl: string): Pro
         role: "user",
         content: [
           { type: "text", text: `Please review this ${type === "skin" ? "facial skin" : "scalp/hair"} photo.` },
-          { type: "image", image: new URL(dataUrl) },
+          { type: "file", data: new URL(dataUrl), mediaType: dataUrl.slice(5, dataUrl.indexOf(";")) },
         ],
       },
     ],
