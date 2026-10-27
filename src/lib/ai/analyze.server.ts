@@ -25,7 +25,7 @@ export class AnalysisError extends Error {
 }
 
 export async function runImageAnalysis(type: AnalysisType, dataUrl: string): Promise<AnalysisResult> {
-  const apiKey = process.env.LOVABLE_API_KEY;
+  const apiKey = process.env['LOVABLE_API_KEY'];
   if (!apiKey) throw new AnalysisError("The AI analysis service is not configured yet.", 503);
 
   const runIdFetch = createLovableAiGatewayRunIdFetch();
@@ -36,7 +36,7 @@ export async function runImageAnalysis(type: AnalysisType, dataUrl: string): Pro
     fetch: runIdFetch.fetch,
   });
 
-  let gatewayError: { status?: number; message?: string } | null = null;
+  let gatewayError: { status: number | undefined; message: string | undefined } | null = null;
   const result = streamText({
     model: provider.responses(ANALYSIS_MODEL),
     instructions: `${COMMON}\n\n${TASKS[type]}`,

@@ -71,7 +71,7 @@ export function AnalyzeFlow({ type }: { type: AnalysisType }) {
     if (!file || !user || !consent) return;
     setError(null);
     setStage("uploading");
-    const ext = file.type.split("/")[1].replace("jpeg", "jpg");
+    const ext = (file.type.split("/")[1] ?? "jpg").replace("jpeg", "jpg");
     const path = `${user.id}/${crypto.randomUUID()}.${ext}`;
     const { error: upErr } = await supabase.storage.from("analysis-images").upload(path, file, { contentType: file.type });
     if (upErr) {
